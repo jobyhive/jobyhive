@@ -4,8 +4,8 @@ Your smart job assistant. Finds opportunities. Applies automatically. Secures yo
 
 <p align="center">
     <picture>
-        <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/airqb/joby/main/docs/img/joby-logo-text-dark.png">
-        <img src="https://raw.githubusercontent.com/airqb/joby/main/docs/img/joby-logo-text-light.png" alt="Joby" width="500">
+        <source media="(prefers-color-scheme: light)" srcset="docs/img/joby-logo-text-dark.png">
+        <img src="docs/img/joby-logo-text-light.png" alt="Joby" width="500">
     </picture>
 </p>
 
