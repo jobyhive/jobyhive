@@ -1,12 +1,14 @@
 # 🐝Joby – AI Job Assistant for Search & Auto-Apply
 
-Your smart job assistant. Finds opportunities. Applies automatically. Secures your interviews—without you lifting a finger. 🐝🌻🍯✨
 
 <p align="center">
     <picture>
         <source media="(prefers-color-scheme: light)" srcset="docs/img/joby-logo-text-dark.png">
         <img src="docs/img/joby-logo-text-light.png" alt="Joby" width="500">
     </picture>
+</p>
+<p align="center">
+Your smart job assistant. Finds opportunities. Applies automatically. Secures your interviews—without you lifting a finger. 🐝🌻🍯✨
 </p>
 
 <p align="center">
