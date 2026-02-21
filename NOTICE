@@ -1,0 +1,23 @@
+Joby AI Project
+=================
+
+Copyright (c) 2026 Ahmed Yassin
+All rights reserved.
+
+This product includes software developed by:
+- Ahmed Yassin (https://github.com/airqb/joby)
+- Open Source Libraries:
+    - LangChain (https://github.com/hwchase17/langchain) – Apache License 2.0
+    - Node.js (https://nodejs.org/) – MIT License
+    - Docker (https://www.docker.com/) – Apache License 2.0
+
+NOTICE
+------
+This software may include third-party components which are subject to their
+own licenses. You should refer to their individual LICENSE files for terms
+and conditions.
+
+Usage
+-----
+This project is distributed under the Apache License 2.0. By using or
+redistributing this software, you agree to comply with the license terms.
