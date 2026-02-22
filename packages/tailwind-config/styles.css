@@ -1,0 +1,310 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+/*@plugin "tailwindcss/animate";*/
+/*@plugin "tailwindcss/scrollbar";*/
+
+@theme inline {
+    --container-sm: 100%;
+    --container-md: 600px;
+    --container-lg: 960px;
+    --container-xl: 1280px;
+
+    --shadow-inner: var(--shadow-inner);
+
+    --radius-xs: 0.125rem;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --radius-4xl: 2rem;
+
+    --max-width-post: 680px;
+
+    --spacing-44: 11rem;
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-info: var(--info);
+    --color-system-gray: var(--system-gray);
+
+    --color-trading-profit: var(--profit);
+    --color-trading-loss: var(--loss);
+    --color-trading-neutral: var(--neutral);
+    --color-trading-volume: var(--volume);
+    --color-trading-alert: var(--alert);
+
+    --animate-accordion-down: accordion-down 0.2s ease-out;
+    --animate-accordion-up: accordion-up 0.2s ease-out;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+
+    @keyframes accordion-down {
+        from {
+            height: 0;
+        }
+        to {
+            height: var(--radix-accordion-content-height);
+        }
+    }
+
+    @keyframes accordion-up {
+        from {
+            height: var(--radix-accordion-content-height);
+        }
+        to {
+            height: 0;
+        }
+    }
+}
+
+
+:root {
+    --shadow-inner: 0 1px 1px 0px rgba(9, 9, 11, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    /* Light Theme Colors - Modern Tailwind UI Style in OKLCH */
+    --background: oklch(97.6% 0.005 86.3);
+    --foreground: oklch(25% 0.02 260);
+    --card: oklch(100% 0 0);
+    --card-foreground: oklch(30% 0.02 260);
+    --popover: oklch(100% 0 0);
+    --popover-foreground: oklch(30% 0.02 260);
+    --primary: oklch(61% 0.19 250);
+    --primary-foreground: oklch(100% 0 0);
+    --secondary: oklch(96% 0.02 250);
+    --secondary-foreground: oklch(30% 0.02 260);
+    --muted: oklch(96% 0.02 250);
+    --muted-foreground: oklch(60% 0.02 250);
+    --accent: oklch(96% 0.02 250);
+    --accent-foreground: oklch(30% 0.02 260);
+    --destructive: oklch(65% 0.25 20);
+    --destructive-foreground: oklch(100% 0 0);
+    --border: oklch(92% 0.01 250);
+    --input: oklch(92% 0.01 250);
+    --ring: oklch(61% 0.19 250);
+    --radius: 0.6rem;
+
+    --chart-1: oklch(55% 0.2 250);
+    --chart-2: oklch(67% 0.15 220);
+    --chart-3: oklch(70% 0.15 190);
+    --chart-4: oklch(53% 0.19 265);
+    --chart-5: oklch(60% 0.2 275);
+
+    --sidebar: hsl(0 0% 98%);
+    --sidebar-foreground: hsl(240 5.3% 26.1%);
+    --sidebar-primary: hsl(240 5.9% 10%);
+    --sidebar-primary-foreground: hsl(0 0% 98%);
+    --sidebar-accent: hsl(240 4.8% 95.9%);
+    --sidebar-accent-foreground: hsl(240 5.9% 10%);
+    --sidebar-border: hsl(220 13% 91%);
+    --sidebar-ring: hsl(217.2 91.2% 59.8%);
+
+    /* System Colors in OKLCH */
+    --success: oklch(70% 0.2 150);
+    --warning: oklch(75% 0.2 80);
+    --info: oklch(61% 0.19 250);
+    --system-gray: oklch(60% 0.02 250);
+
+    /* Trading Colors in OKLCH */
+    --profit: oklch(70% 0.2 150);
+    --loss: oklch(65% 0.25 20);
+    --neutral: oklch(60% 0.02 250);
+    --volume: oklch(65% 0.2 275);
+    --alert: oklch(75% 0.2 80);
+}
+
+.dark {
+    --background: oklch(25% 0.03 260);
+    --foreground: oklch(93% 0.02 250);
+    --card: oklch(30% 0.03 260);
+    --card-foreground: oklch(93% 0.02 250);
+    --popover: oklch(30% 0.03 260);
+    --popover-foreground: oklch(93% 0.02 250);
+    --primary: oklch(61% 0.19 250);
+    --primary-foreground: oklch(100% 0 0);
+    --secondary: oklch(30% 0.03 260);
+    --secondary-foreground: oklch(93% 0.02 250);
+    --muted: oklch(30% 0.03 260);
+    --muted-foreground: oklch(75% 0.02 250);
+    --accent: oklch(30% 0.03 260);
+    --accent-foreground: oklch(93% 0.02 250);
+    --destructive: oklch(65% 0.25 20);
+    --destructive-foreground: oklch(100% 0 0);
+    --border: oklch(35% 0.03 260);
+    --input: oklch(30% 0.03 260);
+    --ring: oklch(61% 0.19 250);
+
+    /* Chart Colors - Dark Mode Optimized in OKLCH */
+    --chart-1: oklch(75% 0.15 250);
+    --chart-2: oklch(78% 0.12 220);
+    --chart-3: oklch(80% 0.12 190);
+    --chart-4: oklch(72% 0.15 265);
+    --chart-5: oklch(77% 0.15 275);
+
+    /* System Colors - Dark Mode in OKLCH */
+    --success: oklch(78% 0.15 150);
+    --warning: oklch(82% 0.15 80);
+    --info: oklch(75% 0.15 250);
+    --system-gray: oklch(75% 0.02 250);
+
+    /* Trading Colors - Dark Mode in OKLCH */
+    --profit: oklch(78% 0.15 150);
+    --loss: oklch(75% 0.20 20);
+    --neutral: oklch(75% 0.02 250);
+    --volume: oklch(75% 0.15 275);
+    --alert: oklch(82% 0.15 80);
+    --sidebar: hsl(240 5.9% 10%);
+    --sidebar-foreground: hsl(240 4.8% 95.9%);
+    --sidebar-primary: hsl(224.3 76.3% 48%);
+    --sidebar-primary-foreground: hsl(0 0% 100%);
+    --sidebar-accent: hsl(240 3.7% 15.9%);
+    --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+    --sidebar-border: hsl(240 3.7% 15.9%);
+    --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        overflow-y: scroll;
+        background-color: var(--background);
+        font-feature-settings: "kern";
+    }
+
+    html body[data-scroll-locked]:not([data-scroll-no-lock]) {
+        min-width: 100%;
+        margin-right: 0 !important;
+        overflow: inherit !important;
+    }
+}
+
+@layer components {
+    .container {
+        @apply mx-auto px-4;
+    }
+}
+
+@layer utilities {
+    .w-13{
+        width: calc(var(--spacing) * 13);
+    }
+    .h-13{
+        height: calc(var(--spacing) * 13);
+    }
+    .rounded-pill {
+        border-radius: 50rem;
+    }
+
+    .scrollbar::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+        display: block !important;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+        background: color-mix(in oklch, var(--foreground) 40%, transparent);
+        border-radius: 1px;
+        transition: background 0.3s ease;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+        background: color-mix(in oklch, var(--foreground) 60%, transparent);
+    }
+
+    .scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 1px;
+    }
+
+    .mask-fade-out {
+        mask-image: linear-gradient(
+                to bottom,
+                black calc(100% - 3rem),
+                transparent 100%
+        );
+    }
+
+    .glass-effect {
+        background: color-mix(in oklch, var(--background) 94%, transparent);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 4px 6px color-mix(in oklch, var(--foreground) 5%, transparent);
+    }
+
+    .trading-card {
+        background: linear-gradient(
+                145deg,
+                var(--card) 0%,
+                var(--card) 82%,
+                color-mix(in oklch, var(--primary) 15%, transparent) 100%
+        );
+        transition: transform 0.3s ease;
+    }
+
+    .trading-card:hover {
+        transform: scale(1.02);
+    }
+
+    .chart-gradient {
+        background: linear-gradient(
+                180deg,
+                color-mix(in oklch, var(--chart-1) 15%, transparent),
+                transparent
+        );
+    }
+}
+
