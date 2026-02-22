@@ -1,2 +1,3 @@
-export * from "./agent";
-export * from "./system";
+export * from "./agent.js";
+export * from "./system.js";
+export * from "./model.js";

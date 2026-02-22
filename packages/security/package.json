@@ -1,13 +1,18 @@
 {
-  "name": "@repo/types",
+  "name": "@repo/security",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  },
   "devDependencies": {
+    "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.0.0",
     "typescript": "5.9.2"
   }
 }

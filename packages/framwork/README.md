@@ -1,6 +1,6 @@
-# Framework
+# ADK Agent Development Kit Framework
 
-This framework is custom-made by **Ahmed M. Yassin** to help create reusable services and components. It allows building complex engines like LEGO blocks. For example, you can build an **Agent** with memory (short-term and long-term), a model, and skills.
+This ADK is custom-made Agent Development Kit Framework by **Ahmed M. Yassin** to help create reusable services and components. It allows building complex engines like LEGO blocks. For example, you can build an **Agent** with memory (short-term and long-term), a model, and skills.
 
 A simple usage could look like this:
 

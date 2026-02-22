@@ -115,6 +115,24 @@ export class ElasticSearchService extends Service {
     }
 
     /**
+     * Get a document by ID.
+     */
+    async get<T = unknown>(
+        index: string,
+        id: string,
+    ): Promise<T | null> {
+        try {
+            const response = await this.client.get<T>({ index, id });
+            return response._source ?? null;
+        } catch (error: any) {
+            if (error.meta?.statusCode === 404) {
+                return null;
+            }
+            throw error;
+        }
+    }
+
+    /**
      * Delete a document by ID.
      */
     async delete(

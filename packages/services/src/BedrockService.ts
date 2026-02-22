@@ -215,8 +215,8 @@ export class BedrockService extends Service {
     /**
      * Convenience wrapper: invoke Nova and return only the text response.
      */
-    async ask(prompt: string, systemPrompt?: string): Promise<string> {
-        const result = await this.invoke({ prompt, systemPrompt });
+    async ask(prompt: string, modelId?: string, systemPrompt?: string): Promise<string> {
+        const result = await this.invoke({ prompt, modelId, systemPrompt });
         return result.text;
     }
 }

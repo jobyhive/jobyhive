@@ -1,43 +1,17 @@
-import { Router, Request, Response } from 'express';
-import ManagerAgent from './agents/ManagerAgent';
-import { config } from '@repo/system-config';
+import {Request, Response, Router} from 'express';
+import {ManagerAgent} from './agents';
+import {webhook} from "./bot";
+
 
 const router = Router();
 
-// ─── Health ───────────────────────────────────────────────────────────────────
-
+// ─── Engine Health ───────────────────────────────────────────────────────────────────
 router.get('/health', (_req: Request, res: Response) => {
     res.json({ status: 'ok', service: 'engine' });
 });
 
-// ─── Telegram Webhook ─────────────────────────────────────────────────────────
-
-router.post('/webhook', async (req: Request, res: Response) => {
-    const message = req.body.message;
-
-    if (message?.text) {
-        const chatId: number = message.chat.id;
-        console.log(message);
-
-        let replyMessage = '';
-
-        switch (message.text) {
-            case '/start':
-                replyMessage = `Hello, ${message.from.first_name} — how can I help you?`;
-                break;
-        }
-
-        if (replyMessage) {
-            await fetch(`${config.TELEGRAM_BOT_API}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: chatId, text: replyMessage }),
-            });
-        }
-    }
-
-    res.sendStatus(200);
-});
+// ─── Bot ─────────────────────────────────────────────────────────
+router.post('/webhook', webhook);
 
 // ─── Manager Agent ────────────────────────────────────────────────────────────
 

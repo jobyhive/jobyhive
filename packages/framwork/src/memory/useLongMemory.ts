@@ -9,6 +9,7 @@ import { elasticSearchService } from "@repo/services";
 export function useLongMemory(): {
     connect: () => Promise<void>;
     search: (index: string, query: any, options?: { size?: number; from?: number }) => Promise<any>;
+    get: <T = any>(index: string, id: string) => Promise<T | null>;
     index: (indexName: string, id: string, body: any) => Promise<any>;
     exists: (indexName: string, id: string) => Promise<boolean>;
     remove: (indexName: string, id: string) => Promise<any>;
@@ -23,6 +24,10 @@ export function useLongMemory(): {
         search: async (index: string, query: any, options?: { size?: number; from?: number }) => {
             await ensureConnected();
             return await elasticSearchService.search(index, query, options);
+        },
+        get: async (index: string, id: string) => {
+            await ensureConnected();
+            return await elasticSearchService.get(index, id);
         },
         index: async (indexName: string, id: string, body: any) => {
             await ensureConnected();
