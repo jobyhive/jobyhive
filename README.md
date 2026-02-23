@@ -1,26 +1,34 @@
-# 🐝Joby – AI Job Assistant for Search & Auto-Apply
+# 🐝Joby – Agentic AI Job Assistant
 
-
-<p align="center">
+<div align="center">
     <picture>
         <source media="(prefers-color-scheme: light)" srcset="docs/img/joby-logo-text-dark.png">
         <img src="docs/img/joby-logo-text-light.png" alt="Joby" width="500">
     </picture>
-</p>
+    <h3 style="text-transform: uppercase; text-align: center; font-weight: bold">
+        Your Autonomous AI Job-Hunting Agent
+    </h3>
+    <p>
+        Your smart job assistant. Finds opportunities. Applies automatically. Secures your interviews—without you lifting a finger. 🐝🌻🍯✨
+    </p>
 
-<P style="text-transform: uppercase; text-align: center; font-weight: bold">The Future of Automated Job Hunting</P>
-<p align="center">
-Your smart job assistant. Finds opportunities. Applies automatically. Secures your interviews—without you lifting a finger. 🐝🌻🍯✨
-</p>
+![Next.js](https://img.shields.io/badge/Next.js-16.1.5-black?style=flat&logo=next.js)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript)
+![Node](https://img.shields.io/badge/Node.js-20+-339933?style=flat&logo=node.js)
+![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat)
 
-<p align="center">
-  <a href="https://github.com/airqb/joby/releases"><img src="https://img.shields.io/github/v/release/airqb/joby?include_prereleases&style=for-the-badge" alt="GitHub release"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge" alt="Apache 2.0 License"></a>
-</p>
+</div>
 
 ---
 
 **Joby** is an AI-powered smart recruitment assistant designed to fully automate the job search and application process.
+
+
+## Problem
+
+## Solution
+
 
 ### How it Works
 The system analyzes the user’s CV, identifies suitable job opportunities across the internet, enhances the CV to match the requirements of each role using AI technologies, and finally submits applications on behalf of the user.
@@ -29,8 +37,10 @@ Joby relies on a Multi-Agent Architecture, where multiple AI agents work in harm
 
 The product currently operates through messaging platforms such as Instagram, with plans to expand to additional channels like WhatsApp and other communication platforms—making the service simple and seamless to access for users.
 
-### Quick start
-
+### Quick start & Installation
+####  Prerequisites
+- Node.js 20 or higher
+#### Setup Instructions
 ```shell
 npnm intall
 npm run dev
@@ -43,5 +53,21 @@ npm run dev
 #### Agents Architecture
 ### Models
 ### Roadmap
+
 ## SECURITY
+
+## License
+
+This project is licensed under the [Apache License 2.0](./LICENSE) – see the LICENSE file for details.
+
+## Acknowledgments
+
+Built with:
+- [Elasticsearch](https://www.elastic.co/elasticsearch) - Elasticsearch is an open source, distributed search and analytics engine built for speed, scale, and AI applications.
+- [AWS](https://)
+
+---
+
 ## Community
+
+This project is currently maintained. Contributions and suggestions are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
