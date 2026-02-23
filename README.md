@@ -25,9 +25,9 @@
 **Joby** is an AI-powered smart recruitment assistant designed to fully automate the job search and application process.
 
 
-## Problem
+### Problem
 
-## Solution
+### Solution
 
 
 ### How it Works
@@ -37,10 +37,10 @@ Joby relies on a Multi-Agent Architecture, where multiple AI agents work in harm
 
 The product currently operates through messaging platforms such as Instagram, with plans to expand to additional channels like WhatsApp and other communication platforms—making the service simple and seamless to access for users.
 
-### Quick start & Installation
-####  Prerequisites
+## Quick start & Installation
+###  Prerequisites
 - Node.js 20 or higher
-#### Setup Instructions
+### Setup Instructions
 ```shell
 npnm intall
 npm run dev
