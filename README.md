@@ -51,6 +51,7 @@ npm run dev
 ## Product
 ### Architecture
 #### Product Architecture
+![](docs/img/joby-system-architecture.png)
 #### Cloud Architecture
 #### Agents Architecture
 ### Models
