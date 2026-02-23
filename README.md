@@ -37,7 +37,9 @@ Joby relies on a Multi-Agent Architecture, where multiple AI agents work in harm
 
 The product currently operates through messaging platforms such as Instagram, with plans to expand to additional channels like WhatsApp and other communication platforms—making the service simple and seamless to access for users.
 
-## Quick start & Installation
+![](docs/img/joby-system-user-flow.png)
+
+## Quick start
 ###  Prerequisites
 - Node.js 20 or higher
 ### Setup Instructions
@@ -58,7 +60,7 @@ npm run dev
 
 ## License
 
-This project is licensed under the [Apache License 2.0](./LICENSE) – see the LICENSE file for details.
+This project is licensed under the [Apache License 2.0](./LICENSE) – see the [LICENSE](./LICENSE) file for details.
 
 ## Acknowledgments
 
@@ -66,7 +68,6 @@ Built with:
 - [Elasticsearch](https://www.elastic.co/elasticsearch) - Elasticsearch is an open source, distributed search and analytics engine built for speed, scale, and AI applications.
 - [AWS](https://)
 
----
 
 ## Community
 

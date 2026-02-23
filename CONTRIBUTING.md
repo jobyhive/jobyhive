@@ -1,4 +1,4 @@
-Contributing to JobyHive
+# Contributing to JobyHive
 
 Welcome to the joby hive! 🐝🌻🍯✨
 
