@@ -1,0 +1,30 @@
+{
+  "name": "joby",
+  "description": "AI assistance that acts as your job agent—finding, matching, and applying to the right roles using your CV so you land more interviews with less effort.",
+  "author": {
+    "name": "ahmed.m.yassin",
+    "url": "https://github.com/airqb"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/airqb/joby.git"
+  },
+  "keywords": ["AI", "jobs", "agent", "automation", "job-search"],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types"
+  },
+  "devDependencies": {
+    "prettier": "^3.7.4",
+    "turbo": "^2.8.10",
+    "typescript": "5.9.2"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18"
+  }
+}

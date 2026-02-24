@@ -1,0 +1,23 @@
+{
+    "name": "@repo/services",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "dependencies": {
+        "@aws-sdk/client-bedrock-runtime": "^3.758.0",
+        "@aws-sdk/client-ses": "^3.758.0",
+        "@aws-sdk/client-sqs": "^3.758.0",
+        "@elastic/elasticsearch": "^8.17.0",
+        "ioredis": "^5.4.2"
+    },
+    "devDependencies": {
+        "@repo/system-config": "workspace:*",
+        "@repo/types": "workspace:*",
+        "@repo/typescript-config": "workspace:*",
+        "@types/node": "^22.0.0",
+        "typescript": "5.9.2"
+    }
+}

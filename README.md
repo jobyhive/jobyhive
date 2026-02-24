@@ -59,7 +59,7 @@ npm run dev
 - Amazon Nova lite
 - Amazon Nova Pro
 ### Roadmap
-
+look into [`VISON.md`](./VISION.md)
 ## SECURITY
 
 ## License

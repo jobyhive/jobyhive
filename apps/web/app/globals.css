@@ -1,0 +1,16 @@
+@import "@repo/tailwind-config/styles.css";
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+
+
+}
+
+body{
+    background: linear-gradient(to bottom, rgba(31, 14, 33, 1) 0%, rgba(24, 24, 27, 1) 52%, rgba(0, 0, 0, 1) 100%);
+}
+
+

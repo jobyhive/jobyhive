@@ -1,0 +1,4 @@
+../services/src/ElasticCacheService.ts(29,22): error TS2709: Cannot use namespace 'Redis' as a type.
+../services/src/ElasticCacheService.ts(44,28): error TS2351: This expression is not constructable.
+  Type 'typeof import("C:/Oreax/products/joby/node_modules/ioredis/built/index")' has no construct signatures.
+../services/src/ElasticCacheService.ts(69,27): error TS2709: Cannot use namespace 'Redis' as a type.
