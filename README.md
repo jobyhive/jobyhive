@@ -55,6 +55,8 @@ npm run dev
 #### Cloud Architecture
 #### Agents Architecture
 ### Models
+- Amazon Nova lite
+- Amazon Nova Pro
 ### Roadmap
 
 ## SECURITY
