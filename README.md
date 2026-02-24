@@ -54,6 +54,7 @@ npm run dev
 ![](docs/img/joby-system-architecture.png)
 #### Cloud Architecture
 #### Agents Architecture
+![](docs/img/joby-agents-architecture.png)
 ### Models
 - Amazon Nova lite
 - Amazon Nova Pro
