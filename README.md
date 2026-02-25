@@ -17,6 +17,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript)
 ![Node](https://img.shields.io/badge/Node.js-20+-339933?style=flat&logo=node.js)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.2-38B2AC?style=flat&logo=tailwind-css)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat&logo=docker)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat)
 
 </div>
@@ -72,6 +73,8 @@ JobyHive is built as a modular monorepo for maximum scalability and reuse.
 - [pnpm](https://pnpm.io/) (highly recommended)
 
 ### Setup Instructions
+
+#### Local Development
 ```shell
 # Install dependencies
 pnpm install
@@ -79,6 +82,20 @@ pnpm install
 # Start development servers
 pnpm dev
 ```
+
+#### Running with Docker (Recommended)
+The easiest way to run the entire JobyHive ecosystem, including the Engine, Web Frontend, and infrastructure (Redis, LocalStack, MinIO, DynamoDB), is using Docker:
+
+```shell
+# Build and start all services
+docker compose up --build
+```
+
+Once running:
+- **Web Frontend**: `http://localhost:3000`
+- **Engine API**: `http://localhost:4000`
+- **Infrastructure**: Local services like Redis (6379) and LocalStack (4566) are automatically configured.
+
 <div align="center">
     <img src="docs/img/joby-terminal-engine-run.png" alt="Terminal Engine Run">
 </div>
