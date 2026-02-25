@@ -49,7 +49,7 @@ export const Footer = () => {
 
                 <div className="pt-8 border-t border-neutral-900 flex flex-col md:flex-row justify-between items-center gap-6">
                     <p className="text-neutral-500 text-sm">
-                        © {new Date().getFullYear()} Joby AI Inc. All rights reserved.
+                        {new Date().getFullYear()} © JobyHive.
                     </p>
                     <div className="flex items-center gap-1 text-neutral-500 text-sm">
                         Joby, a smart job assistant made with

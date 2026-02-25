@@ -1,9 +1,9 @@
-# 🐝Joby – Agentic AI Job Assistant
+# 🐝 JobyHive – Agentic AI Job Assistant
 
 <div align="center">
     <picture>
         <source media="(prefers-color-scheme: light)" srcset="docs/img/joby-logo-text-dark.png">
-        <img src="docs/img/joby-logo-text-light.png" alt="Joby" width="500">
+        <img src="docs/img/joby-logo-text-light.png" alt="JobyHive" width="500">
     </picture>
     <h3 style="text-transform: uppercase; text-align: center; font-weight: bold">
         Your Autonomous AI Job-Hunting Agent
@@ -16,6 +16,7 @@
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript)
 ![Node](https://img.shields.io/badge/Node.js-20+-339933?style=flat&logo=node.js)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.2-38B2AC?style=flat&logo=tailwind-css)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat)
 
 </div>
@@ -25,54 +26,89 @@
 **Joby** is an AI-powered smart recruitment assistant designed to fully automate the job search and application process.
 
 
-### Problem
+## Key Features
 
-### Solution
+- **Automated Job Discovery**: Scans multiple platforms to find relevant roles based on your profile.
+- **Smart CV Tailoring**: Automatically optimizes your CV for each specific job to beat ATS filters.
+- **Autonomous Applications**: Submits applications on your behalf across various platforms.
+- **Messaging-Native Interface**: Interact seamlessly via Telegram, WhatsApp, or Instagram.
+- **Multi-Agent Orchestration**: Specialized AI agents collaborating to maximize interview conversion.
 
+## How it Works
 
-### How it Works
-The system analyzes the user’s CV, identifies suitable job opportunities across the internet, enhances the CV to match the requirements of each role using AI technologies, and finally submits applications on behalf of the user.
-
-Joby relies on a Multi-Agent Architecture, where multiple AI agents work in harmony to perform tasks with high efficiency. This increases interview success rates while saving users significant time and effort throughout their job search journey.
-
-The product currently operates through messaging platforms such as Instagram, with plans to expand to additional channels like WhatsApp and other communication platforms—making the service simple and seamless to access for users.
+The system follows a sophisticated agentic workflow:
+1. **Analysis**: The CV Analysis Agent extracts your core skills, experience, and intent.
+2. **Matching**: The Job Matching Agent (powered by Elasticsearch) finds and indexes the best opportunities.
+3. **Optimization**: The Optimization Agent adjusts your CV/Application to match job requirements perfectly.
+4. **Execution**: The Auto-Apply Agent handles the submission and tracks progress.
 
 ![](docs/img/joby-system-user-flow.png)
 
-## Quick start
-###  Prerequisites
-- Node.js 20 or higher
+## Technical Architecture
+
+JobyHive is built as a modular monorepo for maximum scalability and reuse.
+
+### Project Structure
+- `apps/engine`: Core agent orchestration and automation logic.
+- `apps/web`: High-performance landing page and dashboard (Next.js).
+- `packages/*`: Shared services including `system-config`, `security`, `services` (AWS/Elasticsearch), and `ui`.
+
+### Stack
+- **Framework**: [Turborepo](https://turbo.build/) + [pnpm](https://pnpm.io/)
+- **Frontend**: Next.js 16, React 19, Tailwind CSS 4, Framer Motion
+- **Backend/AI**: Node.js 20, Amazon Nova (Lite & Pro), AWS Bedrock
+- **Data**: Elasticsearch, Redis
+
+#### Product & Agent Architecture
+<div align="center">
+    <img src="docs/img/joby-system-architecture.png" alt="System Architecture" width="400">
+    <img src="docs/img/joby-agents-architecture.png" alt="Agents Architecture" width="400">
+</div>
+
+## Getting Started
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) 20 or higher
+- [pnpm](https://pnpm.io/) (highly recommended)
+
 ### Setup Instructions
 ```shell
-npnm intall
-npm run dev
+# Install dependencies
+pnpm install
+
+# Start development servers
+pnpm dev
 ```
 
-## Product
-### Architecture
-#### Product Architecture
-![](docs/img/joby-system-architecture.png)
-#### Cloud Architecture
-#### Agents Architecture
-![](docs/img/joby-agents-architecture.png)
-### Models
-- Amazon Nova lite
-- Amazon Nova Pro
-### Roadmap
-look into [`VISON.md`](./VISION.md)
-## SECURITY
+## Roadmap & Vision
+
+We are moving from "job searching" to "job securing."
+- [x] Multi-agent orchestration engine
+- [x] Telegram bot integration
+- [x] Automated CV tailoring
+- [ ] WhatsApp & Instagram expansion
+- [ ] Interview probability scoring
+- [ ] Feedback loops from recruiter responses
+
+Detailed strategy: [`VISION.md`](./VISION.md)
+
+## Security
+
+User privacy and data security are our top priorities. We implement minimal data retention and encrypted storage.
+See our [Security Policy](./SECURITY.md) for details.
 
 ## License
 
-This project is licensed under the [Apache License 2.0](./LICENSE) – see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the [Apache License 2.0](./LICENSE).
 
 ## Acknowledgments
 
-Built with:
-- [Elasticsearch](https://www.elastic.co/elasticsearch) - Elasticsearch is an open source, distributed search and analytics engine built for speed, scale, and AI applications.
-- [AWS](https://)
+- **Elasticsearch**: Powering our high-speed, AI-driven search engine.
+- **AWS (Amazon Nova)**: Providing state-of-the-art LLMs for agent logic.
+
+A heartfelt thanks to the open-source community and the maintainers of the libraries that make JobyHive possible. For a complete list of third-party attributions, please refer to the [NOTICE](./NOTICE) file.
 
 
-## Community
+---
 
-This project is currently maintained. Contributions and suggestions are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+<p align="center">Built with 🍯 by the JobyHive Team</p>
