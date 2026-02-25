@@ -59,10 +59,10 @@ JobyHive is built as a modular monorepo for maximum scalability and reuse.
 - **Backend/AI**: Node.js 20, Amazon Nova (Lite & Pro), AWS Bedrock
 - **Data**: Elasticsearch, Redis
 
-#### Product & Agent Architecture
+#### System & Agent Architecture
 <div align="center">
-    <img src="docs/img/joby-system-architecture.png" alt="System Architecture" width="400">
-    <img src="docs/img/joby-agents-architecture.png" alt="Agents Architecture" width="400">
+    <img src="docs/img/joby-system-architecture.png" alt="System Architecture">
+    <img src="docs/img/joby-agents-architecture.png" alt="Agents Architecture">
 </div>
 
 ## Getting Started
