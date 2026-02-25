@@ -99,7 +99,7 @@ ${JSON.stringify(profile, null, 2)}
     const atsScore = result.ats_score || 0;
     const status = atsScore >= 75 ? 'READY' : 'SCORE_TOO_LOW';
 
-    // Store tailored CV in "PostgreSQL" (simulated via long memory for now)
+    // Store tailored CV (simulated via long memory for now)
     const storeId = `${envelope.input_payload.profile.fullname.replace(/\s+/g, '_')}_${targetJob.job_id}`;
     await memory.index("joby-tailored-cvs", storeId, {
         job_id: targetJob.job_id,
