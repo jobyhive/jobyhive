@@ -42,7 +42,7 @@ The system follows a sophisticated agentic workflow:
 3. **Optimization**: The Optimization Agent adjusts your CV/Application to match job requirements perfectly.
 4. **Execution**: The Auto-Apply Agent handles the submission and tracks progress.
 
-![](docs/img/joby-system-user-flow.png)
+![User Flow](docs/img/joby-system-user-flow.png)
 
 ## Technical Architecture
 
@@ -79,6 +79,9 @@ pnpm install
 # Start development servers
 pnpm dev
 ```
+<div align="center">
+    <img src="docs/img/joby-terminal-engine-run.png" alt="Terminal Engine Run">
+</div>
 
 ## Roadmap & Vision
 
@@ -108,7 +111,10 @@ This project is licensed under the [Apache License 2.0](./LICENSE).
 
 A heartfelt thanks to the open-source community and the maintainers of the libraries that make JobyHive possible. For a complete list of third-party attributions, please refer to the [NOTICE](./NOTICE) file.
 
+## Community
+
+This project is currently maintained. Contributions and suggestions are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
 ---
 
-<p align="center">Built with 🍯 by the JobyHive Team</p>
+<p align="center">Built with 🍯 by <a href="https://github.com/airqb" target="_blank">Ahmed.M.Yassin</a></p>
