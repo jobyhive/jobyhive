@@ -1,6 +1,6 @@
-import {Request, Response, Router} from 'express';
-import {ManagerAgent} from './agents';
-import {webhook} from "./bot";
+import { Request, Response, Router } from 'express';
+import { OrchestratorAgent } from './agents/index.js';
+import { webhook } from "./bot/index.js";
 
 
 const router = Router();
@@ -13,14 +13,14 @@ router.get('/health', (_req: Request, res: Response) => {
 // ─── Bot ─────────────────────────────────────────────────────────
 router.post('/webhook', webhook);
 
-// ─── Manager Agent ────────────────────────────────────────────────────────────
+// ─── Orchestrator Agent ────────────────────────────────────────────────────────────
 
-router.post('/agent/manager', async (_req: Request, res: Response) => {
+router.post('/agent/orchestrator', async (_req: Request, res: Response) => {
     try {
-        await ManagerAgent();
-        res.json({ message: 'Manager Agent triggered' });
+        await OrchestratorAgent();
+        res.json({ message: 'Orchestrator Agent triggered' });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to run Manager Agent', es: error });
+        res.status(500).json({ error: 'Failed to run Orchestrator Agent', es: error });
     }
 });
 

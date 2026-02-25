@@ -1,4 +1,4 @@
 ### GET request to example server
-POST http://localhost:3002/agent/manager
+POST http://localhost:4000/webhook
 
 ###

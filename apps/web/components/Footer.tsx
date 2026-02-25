@@ -53,7 +53,7 @@ export const Footer = () => {
                     </p>
                     <div className="flex items-center gap-1 text-neutral-500 text-sm">
                         Joby, a smart job assistant made with
-                        <Heart className="w-4 h-4 text-red-500 fill-red-500 inline" />
+                        🍯
                         by <a href="https://github.com/airqb" target="_blank" rel="noopener noreferrer" className="underline text-amber-500">Ahmed.M.Yassin</a>
                     </div>
                 </div>

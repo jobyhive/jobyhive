@@ -28,6 +28,14 @@ import { Service } from './Service.js';
 export interface InvokeOptions {
     /** Prompt / user message. */
     prompt: string;
+    /** Optional document to include in the request. */
+    document?: {
+        format: 'pdf' | 'csv' | 'docx' | 'html' | 'md' | 'txt' | 'xls' | 'xlsx';
+        name: string;
+        source: {
+            bytes: Uint8Array;
+        };
+    };
     /** Prior conversation turns to include (for multi-turn dialogue). */
     history?: Message[];
     /** System prompt override. */
@@ -115,9 +123,28 @@ export class BedrockService extends Service {
         return override ?? config.BEDROCK_MODEL_ID;
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // API surface
-    // ─────────────────────────────────────────────────────────────────────────
+    private cleanHistory(history: Message[]): Message[] {
+        if (history.length === 0) return [];
+
+        let cleaned: Message[] = [];
+        let expectedRole: 'user' | 'assistant' = 'user';
+
+        for (const msg of history) {
+            if (msg.role === expectedRole) {
+                cleaned.push(msg);
+                expectedRole = expectedRole === 'user' ? 'assistant' : 'user';
+            } else if (msg.role === 'user' && expectedRole === 'assistant') {
+                // Two user messages in a row? Merge them or skip. 
+                // For simplicity, let's keep the latest one and wait for an assistant role.
+                cleaned[cleaned.length - 1] = msg;
+            }
+        }
+
+        // Must start with user. If not, slice until first user.
+        const firstUserIndex = cleaned.findIndex(m => m.role === 'user');
+        if (firstUserIndex === -1) return [];
+        return cleaned.slice(firstUserIndex);
+    }
 
     /**
      * Send a prompt to Amazon Nova and receive a full (non-streaming) reply.
@@ -132,12 +159,17 @@ export class BedrockService extends Service {
     async invoke(options: InvokeOptions): Promise<InvokeResult> {
         const modelId = this.resolveModelId(options.modelId);
 
+        const userContent: ContentBlock[] = [{ text: options.prompt }];
+        if (options.document) {
+            userContent.push({ document: options.document });
+        }
+
         // Build message list: optional history + new user turn
         const messages: Message[] = [
-            ...(options.history ?? []),
+            ...this.cleanHistory(options.history ?? []),
             {
                 role: 'user',
-                content: [{ text: options.prompt }],
+                content: userContent,
             },
         ];
 
@@ -180,11 +212,16 @@ export class BedrockService extends Service {
     ): AsyncGenerator<string, void, unknown> {
         const modelId = this.resolveModelId(options.modelId);
 
+        const userContent: ContentBlock[] = [{ text: options.prompt }];
+        if (options.document) {
+            userContent.push({ document: options.document });
+        }
+
         const messages: Message[] = [
-            ...(options.history ?? []),
+            ...this.cleanHistory(options.history ?? []),
             {
                 role: 'user',
-                content: [{ text: options.prompt }],
+                content: userContent,
             },
         ];
 
@@ -215,8 +252,8 @@ export class BedrockService extends Service {
     /**
      * Convenience wrapper: invoke Nova and return only the text response.
      */
-    async ask(prompt: string, modelId?: string, systemPrompt?: string): Promise<string> {
-        const result = await this.invoke({ prompt, modelId, systemPrompt });
+    async ask(prompt: string, modelId?: string, systemPrompt?: string, history?: Message[], document?: InvokeOptions['document']): Promise<string> {
+        const result = await this.invoke({ prompt, modelId, systemPrompt, history, document });
         return result.text;
     }
 }

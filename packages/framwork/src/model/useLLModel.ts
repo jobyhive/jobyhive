@@ -11,7 +11,7 @@ import { bedrockService, type InvokeOptions, type InvokeResult } from "@repo/ser
  */
 export function useLLModel(defaultModelId?: string): {
     connect: () => Promise<void>;
-    ask: (prompt: string, systemPrompt?: string, modelId?: string) => Promise<string>;
+    ask: (prompt: string, historyOrSystemPrompt?: any[] | string, systemPrompt?: string, modelId?: string, document?: InvokeOptions['document']) => Promise<string>;
     invoke: (options: InvokeOptions) => Promise<InvokeResult>;
     invokeStream: (options: InvokeOptions) => AsyncGenerator<string>;
     service: any;
@@ -22,9 +22,18 @@ export function useLLModel(defaultModelId?: string): {
 
     return {
         connect: ensureConnected,
-        ask: async (prompt: string, systemPrompt?: string, modelId?: string) => {
+        ask: async (prompt: string, historyOrSystemPrompt?: any[] | string, systemPrompt?: string, modelId?: string, document?: InvokeOptions['document']) => {
+            let actualHistory: any[] = [];
+            let actualSystemPrompt = systemPrompt;
+
+            if (typeof historyOrSystemPrompt === 'string') {
+                actualSystemPrompt = historyOrSystemPrompt;
+            } else if (Array.isArray(historyOrSystemPrompt)) {
+                actualHistory = historyOrSystemPrompt;
+            }
+
             await ensureConnected();
-            return await bedrockService.ask(prompt, modelId ?? defaultModelId, systemPrompt);
+            return await bedrockService.ask(prompt, modelId ?? defaultModelId, actualSystemPrompt, actualHistory, document);
         },
         invoke: async (options: InvokeOptions) => {
             await ensureConnected();

@@ -9,6 +9,8 @@ export interface UserSessionRecord {
     userId: string;
     chatBotType: string;
     isBot: boolean;
+    firstName?: string;
+    username?: string;
     createdDate: string; // ISO date
 }
 
@@ -26,6 +28,8 @@ export interface UserSessionProps {
     chatBotType: string;
     userId: string;
     isBot: boolean;
+    firstName?: string;
+    username?: string;
 }
 
 /**
@@ -35,7 +39,7 @@ export interface UserSessionProps {
  * @returns Promise<UserSessionResult>
  */
 export async function UserSession(props: UserSessionProps): Promise<UserSessionResult> {
-    const { chatBotType, userId, isBot } = props;
+    const { chatBotType, userId, isBot, firstName, username } = props;
     const memory = useLongMemory();
 
     // 1️⃣ Generate Deterministic ID
@@ -59,6 +63,8 @@ export async function UserSession(props: UserSessionProps): Promise<UserSessionR
         userId,
         chatBotType,
         isBot,
+        firstName,
+        username,
         createdDate
     };
 
