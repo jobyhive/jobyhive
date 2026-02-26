@@ -6,18 +6,14 @@
 
 declare module "sst" {
   export interface Resource {
-    "Database": {
-      "name": string
-      "type": "sst.aws.Dynamo"
-    }
     "Engine": {
       "name": string
       "type": "sst.aws.Function"
       "url": string
     }
-    "Storage": {
-      "name": string
-      "type": "sst.aws.Bucket"
+    "EngineRouter": {
+      "type": "sst.aws.Router"
+      "url": string
     }
     "Web": {
       "type": "sst.aws.Nextjs"

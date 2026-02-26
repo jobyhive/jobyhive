@@ -41,6 +41,10 @@ const REQUIRED_IN_PRODUCTION: (keyof SystemConfig)[] = [
 function validateEnv(cfg: SystemConfig): void {
     if (cfg.NODE_ENV !== 'production') return;
 
+    // In AWS Lambda, we can rely on IAM roles for AWS credentials, so we don't strict-fail if keys are missing.
+    const isLambda = !!process.env.AWS_LAMBDA_FUNCTION_NAME;
+    if (isLambda) return;
+
     const missing = REQUIRED_IN_PRODUCTION.filter((key) => {
         const value = cfg[key];
         return typeof value === 'string' && value.trim() === '';
@@ -49,7 +53,7 @@ function validateEnv(cfg: SystemConfig): void {
     if (missing.length > 0) {
         throw new Error(
             `[system-config] Missing required environment variables in production:\n  ${missing.join(', ')}\n` +
-            `Make sure your root .env or deployment environment defines them.`,
+            `Make sure your root .env or deployment environment defines them.`
         );
     }
 }
@@ -78,9 +82,10 @@ export const systemConfig: SystemConfig = {
     TELEGRAM_BOT_ACCESS_TOKEN,
     TELEGRAM_BOT_API: `https://api.telegram.org/bot${TELEGRAM_BOT_ACCESS_TOKEN}`,
     // ── AWS credentials ───────────────────────────────────────────────────────
-    AWS_ACCESS_KEY_ID: process.env['AWS_ACCESS_KEY_ID'] ?? '',
-    AWS_SECRET_ACCESS_KEY: process.env['AWS_SECRET_ACCESS_KEY'] ?? '',
-    AWS_REGION: process.env['AWS_REGION'] ?? 'us-east-1',
+    // Prefer the prefixed APP_ version to avoid standard reserved key conflicts in Lambda
+    AWS_ACCESS_KEY_ID: process.env['AWS_ACCESS_KEY_ID'] || process.env['APP_AWS_ACCESS_KEY_ID'] || '',
+    AWS_SECRET_ACCESS_KEY: process.env['AWS_SECRET_ACCESS_KEY'] || process.env['APP_AWS_SECRET_ACCESS_KEY'] || '',
+    AWS_REGION: process.env['AWS_REGION'] || process.env['APP_AWS_REGION'] || 'us-east-1',
 
     // ── Elasticsearch ─────────────────────────────────────────────────────────
     ELASTICSEARCH_URL: process.env['ELASTICSEARCH_URL'] ?? '',

@@ -3,24 +3,7 @@
     "compilerOptions": {
         "outDir": "dist",
         "rootDir": "src",
-        "baseUrl": ".",
-        "paths": {
-            "@repo/framwork": [
-                "../../packages/framwork/src/index.ts"
-            ],
-            "@repo/services": [
-                "../../packages/services/src/index.ts"
-            ],
-            "@repo/system-config": [
-                "../../packages/system-config/src/index.ts"
-            ],
-            "@repo/security": [
-                "../../packages/security/src/index.ts"
-            ],
-            "@repo/types": [
-                "../../packages/types/src/index.ts"
-            ]
-        }
+        "baseUrl": "."
     },
     "include": [
         "src"

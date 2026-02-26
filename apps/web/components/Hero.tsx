@@ -58,7 +58,10 @@ export const Hero = () => {
                         >
                             Meet Your AI Job Assistant
                         </button>
-                        <button className="border border-neutral-800 text-white h-12 px-8 rounded-full hover:bg-neutral-900 transition-all">
+                        <button
+                            onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+                            className="border border-neutral-800 text-white h-12 px-8 rounded-full hover:bg-neutral-900 transition-all"
+                        >
                             How it works
                         </button>
                     </div>
@@ -72,9 +75,10 @@ export const Hero = () => {
                         className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-2 md:p-4 backdrop-blur-sm overflow-hidden aspect-video max-w-4xl mx-auto shadow-2xl cursor-pointer group relative"
                     >
                         <Image
-                            src="/imgs/dashboard-preview.png"
-                            alt="Joby Dashboard"
-                            fill
+                            src="/imgs/video-preview.png"
+                            alt="Joby Introduction"
+                            width={1920}
+                            height={1080}
                             className="object-cover rounded-lg opacity-60 group-hover:opacity-100 transition-opacity duration-500"
                         />
                         <div className="absolute inset-0 flex items-center justify-center">

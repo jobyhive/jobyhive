@@ -1,0 +1,18 @@
+export var LLModelType;
+(function (LLModelType) {
+    LLModelType["AMAZON_NOVA_LITE"] = "amazon.nova-lite-v1:0";
+    LLModelType["AMAZON_NOVA_PRO"] = "amazon.nova-pro-v1:0";
+    LLModelType["AMAZON_NOVA_MICRO"] = "amazon.nova-micro-v1:0";
+    LLModelType["AMAZON_NOVA_CANVAS"] = "amazon.nova-canvas-v1:0";
+    LLModelType["AMAZON_NOVA_PREMIER"] = "amazon.nova-premier-v1:0";
+    LLModelType["AMAZON_NOVA_REEL_V0"] = "amazon.nova-reel-v1:0";
+    LLModelType["AMAZON_NOVA_REEL_V1"] = "amazon.nova-reel-v1:1";
+    LLModelType["AMAZON_NOVA_SONIC"] = "amazon.nova-sonic-v1:0";
+    LLModelType["AMAZON_TITAN_TEXT_EMB"] = "amazon.titan-embed-text-v1";
+    LLModelType["AMAZON_TITAN_IMG_GEN"] = "amazon.titan-image-generator-v2:0";
+    LLModelType["AMAZON_TITAN_EMBED_IMG"] = "amazon.titan-embed-image-v1";
+    LLModelType["AMAZON_RERANK"] = "amazon.rerank-v1:0";
+    LLModelType["DEEPSEEK_R1"] = "deepseek-llm-r1";
+    LLModelType["DEEPSEEK_V3"] = "deepseek.v3.2";
+    // Add more Bedrock models here as needed
+})(LLModelType || (LLModelType = {}));

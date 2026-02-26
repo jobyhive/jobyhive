@@ -9,22 +9,10 @@ export default $config({
         };
     },
     async run() {
-        // 1. Storage
-        const storage = new sst.aws.Bucket("Storage");
-
-        // 2. Database
-        const table = new sst.aws.Dynamo("Database", {
-            fields: {
-                pk: "string",
-                sk: "string",
-            },
-            primaryIndex: { hashKey: "pk", rangeKey: "sk" },
-        });
-
-        // 3. Backend (Engine)
+        // 1. Backend (Engine)
+        // Set up the backend engine as a serverless function with a direct URL access.
         const engine = new sst.aws.Function("Engine", {
             handler: "apps/engine/src/lambda.handler",
-            link: [storage, table],
             url: true,
             nodejs: {
                 install: [
@@ -39,26 +27,69 @@ export default $config({
                     "ioredis"
                 ],
             },
+            memory: "1024 MB", // Balanced for performance and cost
+            permissions: [
+                {
+                    actions: ["bedrock:*", "ses:*", "sqs:*"],
+                    resources: ["*"],
+                },
+            ],
             environment: {
                 NODE_ENV: "production",
-                // In prod, these should be real AWS values
-                S3_BUCKET: storage.name,
-                DYNAMODB_TABLE: table.name,
+                // Renaming reserved AWS keys to avoid Lambda deployment errors.
+                // The application will be updated to check these APP_ prefixed versions.
+                APP_AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || "",
+                APP_AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || "",
+                APP_AWS_REGION: process.env.AWS_REGION || "us-east-1",
+                ELASTICSEARCH_URL: process.env.ELASTICSEARCH_URL || "",
+                ELASTICSEARCH_API_KEY: process.env.ELASTICSEARCH_API_KEY || "",
+                BEDROCK_MODEL_ID: process.env.BEDROCK_MODEL_ID || "amazon.nova-lite-v1:0",
+                TELEGRAM_BOT_ACCESS_TOKEN: process.env.TELEGRAM_BOT_ACCESS_TOKEN || "",
             },
         });
 
-        // 4. Frontend (Web)
+        // 2. Engine Router (Custom Subdomain)
+        // Set up ai.jobyhive.com to route to the Engine function.
+        const engineRouter = new sst.aws.Router("EngineRouter", {
+            domain: {
+                name: "ai.jobyhive.com",
+                dns: sst.aws.dns(),
+            },
+            routes: {
+                "/*": engine.url,
+            },
+        });
+
+        // 3. Frontend (Web)
+        // Set up the Next.js app on AWS Lambda with a custom domain on Route 53.
         const web = new sst.aws.Nextjs("Web", {
             path: "apps/web",
-            link: [storage, table],
+            domain: {
+                name: "jobyhive.com",
+                dns: sst.aws.dns(),
+            },
+            permissions: [
+                {
+                    actions: ["bedrock:*", "ses:*", "sqs:*"],
+                    resources: ["*"],
+                },
+            ],
             environment: {
-                NEXT_PUBLIC_API_URL: engine.url,
+                NEXT_PUBLIC_API_URL: "https://ai.jobyhive.com",
+                NODE_ENV: "production",
+                // Consistently using APP_ prefixed versions to avoid Lambda reserved key conflicts.
+                APP_AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || "",
+                APP_AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || "",
+                APP_AWS_REGION: process.env.AWS_REGION || "us-east-1",
+                ELASTICSEARCH_URL: process.env.ELASTICSEARCH_URL || "",
+                ELASTICSEARCH_API_KEY: process.env.ELASTICSEARCH_API_KEY || "",
+                BEDROCK_MODEL_ID: process.env.BEDROCK_MODEL_ID || "amazon.nova-lite-v1:0",
             },
         });
 
         return {
-            engineUrl: engine.url,
-            webUrl: web.url,
+            engineUrl: "https://ai.jobyhive.com",
+            webUrl: "https://jobyhive.com",
         };
     },
 });

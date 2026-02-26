@@ -58,12 +58,11 @@ JobyHive is built as a modular monorepo for maximum scalability and reuse.
 JobyHive leverages [SST (Ion)](https://sst.dev/) to define and manage a serverless AWS infrastructure, ensuring high scalability and cost-efficiency.
 
 - **Storage (`sst.aws.Bucket`)**: Securely stores user CVs, matched job descriptions, and generated application documents.
-- **Database (`sst.aws.Dynamo`)**: A high-performance NoSQL database for tracking job applications, user preferences, and agent states.
 - **Backend Engine (`sst.aws.Function`)**: The core AI orchestration engine, running as a Lambda function with direct access to storage and database resources.
-- **Web Frontend (`sst.aws.Nextjs`)**: A modern Next.js interface providing a seamless dashboard and landing experience.
+- **Web Frontend (`sst.aws.Nextjs`)**: A modern Next.js interface providing a seamless landing experience.
 
 ### Stack
-- **Infrastructure**: [SST v3 (Ion)](https://sst.dev/), AWS (Lambda, S3, DynamoDB)
+- **Infrastructure**: [SST v3 (Ion)](https://sst.dev/), AWS (Lambda, S3)
 - **Framework**: [Turborepo](https://turbo.build/) + [pnpm](https://pnpm.io/)
 - **Frontend**: Next.js 16, React 19, Tailwind CSS 4, Framer Motion
 - **Backend/AI**: Node.js 20, Amazon Nova (Lite & Pro), AWS Bedrock
