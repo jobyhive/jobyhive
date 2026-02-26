@@ -54,7 +54,16 @@ JobyHive is built as a modular monorepo for maximum scalability and reuse.
 - `apps/web`: High-performance landing page and dashboard (Next.js).
 - `packages/*`: Shared services including `system-config`, `security`, `services` (AWS/Elasticsearch), and `ui`.
 
+### Cloud Infrastructure (SST)
+JobyHive leverages [SST (Ion)](https://sst.dev/) to define and manage a serverless AWS infrastructure, ensuring high scalability and cost-efficiency.
+
+- **Storage (`sst.aws.Bucket`)**: Securely stores user CVs, matched job descriptions, and generated application documents.
+- **Database (`sst.aws.Dynamo`)**: A high-performance NoSQL database for tracking job applications, user preferences, and agent states.
+- **Backend Engine (`sst.aws.Function`)**: The core AI orchestration engine, running as a Lambda function with direct access to storage and database resources.
+- **Web Frontend (`sst.aws.Nextjs`)**: A modern Next.js interface providing a seamless dashboard and landing experience.
+
 ### Stack
+- **Infrastructure**: [SST v3 (Ion)](https://sst.dev/), AWS (Lambda, S3, DynamoDB)
 - **Framework**: [Turborepo](https://turbo.build/) + [pnpm](https://pnpm.io/)
 - **Frontend**: Next.js 16, React 19, Tailwind CSS 4, Framer Motion
 - **Backend/AI**: Node.js 20, Amazon Nova (Lite & Pro), AWS Bedrock
@@ -95,6 +104,14 @@ Once running:
 - **Web Frontend**: `http://localhost:3000`
 - **Engine API**: `http://localhost:4000`
 - **Infrastructure**: Local services like Redis (6379) and LocalStack (4566) are automatically configured.
+
+#### Cloud Deployment (SST)
+To deploy the infrastructure to your AWS account:
+
+```shell
+# Deploy to production stage
+pnpm run deploy:prod
+```
 
 <div align="center">
     <img src="docs/img/joby-terminal-engine-run.png" alt="Terminal Engine Run">
