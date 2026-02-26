@@ -10,7 +10,7 @@
  * Config is sourced exclusively from `@repo/system-config`.
  */
 
-import Redis from 'ioredis';
+import { Redis } from 'ioredis';
 import { config } from '@repo/system-config';
 import { Service } from './Service.js';
 

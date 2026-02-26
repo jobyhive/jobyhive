@@ -1,1 +1,1 @@
-export * from "./keccak256";
+export * from "./keccak256.js";

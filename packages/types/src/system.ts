@@ -13,11 +13,6 @@ export interface SystemConfig {
     AWS_SECRET_ACCESS_KEY: string;
     AWS_REGION: string;
 
-    // ── Amazon Associates – Product Advertising API 5.0 ─────────────────────
-    AMAZON_PARTNER_TAG: string;
-    AMAZON_HOST: string;
-    AMAZON_MARKETPLACE: string;
-
     // ── Elasticsearch (Elastic Cloud or self-hosted) ──────────────────────────
     ELASTICSEARCH_URL: string;
     ELASTICSEARCH_API_KEY: string;
@@ -31,7 +26,6 @@ export interface SystemConfig {
     // ── Amazon Simple Queue Service (SQS) ────────────────────────────────────
     SQS_QUEUE_URL: string;
 
-    // ── Amazon Bedrock – Nova LLM ─────────────────────────────────────────────
-    /** Model ID used by BedrockService. Defaults to amazon.nova-lite-v1:0 */
+    // ── Amazon Bedrock ────────────────────────────────────────────────────────
     BEDROCK_MODEL_ID: string;
 }

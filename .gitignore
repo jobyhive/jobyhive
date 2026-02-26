@@ -5,12 +5,18 @@ node_modules
 .pnp
 .pnp.js
 
+.sst
 # Local env files
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.development
+.env.production
+
+.idea/
+.vscode/
 
 # Testing
 coverage
@@ -36,3 +42,4 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+

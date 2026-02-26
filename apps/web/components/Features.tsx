@@ -2,49 +2,54 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Search, Zap, FileText, Calendar, Shield, MousePointer2 } from "lucide-react";
+import { Search, Zap, FileText, MessageCircle, Brain, Cloud, Cpu } from "lucide-react";
 
 const features = [
     {
+        title: "No need Machine to Runs",
+        description: "Cloud-powered and always available — no dedicated machine required. Private and secure by design.",
+        icon: Cloud,
+    },
+    {
+        title: "Any Chat App",
+        description: "Currently available on Telegram. Works in both direct messages and group chats.",
+        icon: MessageCircle,
+    },
+    {
+        title: "Persistent Memory",
+        description: "Remembers you and becomes uniquely yours. Your preferences, your context, your AI.",
+        icon: Brain,
+    },
+    {
         title: "AI Job Discovery",
-        description: "Our intelligent agents scan thousands of job boards to find the perfect matches based on your unique profile.",
+        description: "Continuously scans thousands of job boards to find the best opportunities tailored to your profile.",
         icon: Search,
     },
     {
         title: "CV Optimization",
-        description: "Joby automatically tailors your CV for each application, highlighting the most relevant skills for the role.",
+        description: "Automatically tailors your CV for each role, highlighting the most relevant skills and improving ATS compatibility.",
         icon: FileText,
     },
     {
         title: "Auto-Apply",
-        description: "Save hundreds of hours. Joby fills out application forms and submits them on your behalf automatically.",
+        description: "Saves hundreds of hours by filling out applications and submitting them on your behalf.",
         icon: Zap,
     },
     {
-        title: "Interview Scheduling",
-        description: "Once you get a bite, Joby helps coordinate interview times that fit your current schedule seamlessly.",
-        icon: Calendar,
-    },
-    {
-        title: "Smart Tracking",
-        description: "Monitor every application, status update, and response from a single, unified dashboard.",
-        icon: MousePointer2,
-    },
-    {
-        title: "Data Privacy",
-        description: "Your data is encrypted and secure. We only share information with employers when you're ready.",
-        icon: Shield,
+        title: "Smart Automation",
+        description: "Handles repetitive job-search tasks end-to-end, so you can focus on interviews and career growth.",
+        icon: Cpu,
     },
 ];
 
 export const Features = () => {
     return (
-        <section id="features" className="py-24  text-white relative">
-            <div className="container mx-auto px-6">
+        <section id="features" className="py-24 text-white relative">
+            <div className="container max-w-6xl mx-auto px-6">
                 <div className="text-center mb-20">
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4">Powerful Features for <br /> <span className="text-amber-500">Modern Job Seekers</span></h2>
+                    <h2 className="text-3xl md:text-5xl font-bold mb-4 gradient-text-01">What It Does</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">
-                        Everything you need to automate your job search and land your next big role with ease.
+                        Automate your entire job search process with Joby&apos;s intelligent features.
                     </p>
                 </div>
 
@@ -58,8 +63,8 @@ export const Features = () => {
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             className="p-8 rounded-2xl border border-neutral-800 bg-neutral-900/30 hover:bg-neutral-900/50 transition-colors group"
                         >
-                            <div className="w-12 h-12 rounded-lg bg-amber-500/10 flex items-center justify-center mb-6 group-hover:bg-amber-500/20 transition-colors">
-                                <feature.icon className="w-6 h-6 text-amber-500" />
+                            <div className="w-12 h-12 rounded-lg bg-amber-400/10 flex items-center justify-center mb-6 group-hover:bg-amber-400/20 transition-colors">
+                                <feature.icon className="w-6 h-6 text-amber-400" />
                             </div>
                             <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
                             <p className="text-neutral-400 leading-relaxed">

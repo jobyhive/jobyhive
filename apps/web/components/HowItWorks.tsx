@@ -30,9 +30,9 @@ const steps = [
 export const HowItWorks = () => {
     return (
         <section id="how-it-works" className="py-24  text-white relative">
-            <div className="container mx-auto px-6">
+            <div className="container max-w-6xl mx-auto px-6">
                 <div className="text-center mb-20">
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4">How It <span className="text-amber-500">Works</span></h2>
+                    <h2 className="text-3xl md:text-5xl gradient-text-03  font-bold mb-4">How It <span>Works</span></h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">
                         Getting your dream job has never been this simple. Four steps to a better career.
                     </p>
@@ -52,7 +52,7 @@ export const HowItWorks = () => {
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 className="text-center"
                             >
-                                <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center mx-auto mb-6 shadow-[0_0_20px_rgba(245,158,11,0.3)]">
+                                <div className="w-16 h-16 rounded-full bg-amber-400 flex items-center justify-center mx-auto mb-6 shadow-[0_0_20px_rgba(245,158,11,0.3)]">
                                     <step.icon className="w-8 h-8 text-black" />
                                 </div>
                                 <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-2xl">

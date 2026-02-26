@@ -6,12 +6,12 @@
  */
 
 import { useLLModel } from "@repo/framwork";
-import { Agent } from "@repo/types";
+import { Agent, LLModelType } from "@repo/types";
 import { A2AEnvelope, AgentResponse } from "./A2AProtocol.js";
 
 const AutoApplyAgent: Agent<A2AEnvelope<any>, AgentResponse<any>> = async (envelope) => {
     if (!envelope) throw new Error("Envelope is required for AutoApplyAgent");
-    const llm = useLLModel();
+    const llm = useLLModel(LLModelType.DEEPSEEK_V3);
     // Logic to tailor cover letter and apply via MCP/Browser...
 
     return {

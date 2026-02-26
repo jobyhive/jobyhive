@@ -2,7 +2,7 @@ import { Hero } from "../components/Hero";
 import { Features } from "../components/Features";
 import { HowItWorks } from "../components/HowItWorks";
 import { Agents } from "../components/Agents";
-import { CTA } from "../components/CTA";
+import { Newsletter } from "../components/Newsletter";
 import { Footer } from "../components/Footer";
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
       <Features />
       <HowItWorks />
       <Agents />
-      <CTA />
+      <Newsletter />
       <Footer />
     </main>
   );

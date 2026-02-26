@@ -5,12 +5,25 @@ import { SystemConfig } from "@repo/types";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // ---------------------------------------------------------------------------
-// Resolve the monorepo root .env from the current file's location.
-// This ensures the .env is found regardless of where the process is started.
+// Resolve the monorepo root and load the correct .env file based on NODE_ENV.
+//
+// Load order (later files do NOT override earlier ones):
+//   1. .env.<environment>   – environment-specific values   (highest priority)
+//   2. .env                 – shared baseline / local defaults (fallback)
+//
+// NODE_ENV is read directly from process.env here, before the config object
+// is built, so that the right file is chosen on first import.
 // ---------------------------------------------------------------------------
-const rootEnvPath = path.resolve(__dirname, '..', '..', '..', '.env');
+const rootDir = path.resolve(__dirname, '..', '..', '..');
+const nodeEnvRaw = process.env['NODE_ENV'] ?? 'development';
+const envFile = nodeEnvRaw === 'production' ? '.env.production' : '.env.development';
 
-dotenv.config({ path: rootEnvPath });
+// Load the environment-specific file first (highest priority).
+dotenv.config({ path: path.join(rootDir, envFile) });
+
+// Load the base .env as a fallback; override:false means it will NOT
+// overwrite values that the environment-specific file already set.
+dotenv.config({ path: path.join(rootDir, '.env'), override: false });
 
 // ---------------------------------------------------------------------------
 // Runtime validation helpers
@@ -23,7 +36,6 @@ dotenv.config({ path: rootEnvPath });
 const REQUIRED_IN_PRODUCTION: (keyof SystemConfig)[] = [
     'AWS_ACCESS_KEY_ID',
     'AWS_SECRET_ACCESS_KEY',
-    'AMAZON_PARTNER_TAG',
 ];
 
 function validateEnv(cfg: SystemConfig): void {
@@ -46,7 +58,7 @@ function validateEnv(cfg: SystemConfig): void {
 // Config object
 // ---------------------------------------------------------------------------
 
-const NODE_ENV_VALUE = process.env['NODE_ENV'] ?? 'development';
+const NODE_ENV_VALUE = process.env['NODE_ENV'] ?? '';
 const validNodeEnvValues = ['development', 'production', 'test'] as const;
 type NodeEnvValue = (typeof validNodeEnvValues)[number];
 
@@ -57,7 +69,7 @@ function parseNodeEnv(value: string): NodeEnvValue {
     return 'development';
 }
 
-const TELEGRAM_BOT_ACCESS_TOKEN = process.env['TELEGRAM_BOT_ACCESS_TOKEN'] ?? '8355213023:AAEH52qJBmrJRcBHL9F7vOjXwnuLib4Dyog';
+const TELEGRAM_BOT_ACCESS_TOKEN = process.env['TELEGRAM_BOT_ACCESS_TOKEN'] ?? '';
 export const systemConfig: SystemConfig = {
     PORT: parseInt(process.env['PORT'] ?? '4000', 10),
     NODE_ENV: parseNodeEnv(NODE_ENV_VALUE),
@@ -70,17 +82,12 @@ export const systemConfig: SystemConfig = {
     AWS_SECRET_ACCESS_KEY: process.env['AWS_SECRET_ACCESS_KEY'] ?? '',
     AWS_REGION: process.env['AWS_REGION'] ?? 'us-east-1',
 
-    // ── Amazon Associates / PA API ────────────────────────────────────────────
-    AMAZON_PARTNER_TAG: process.env['AMAZON_PARTNER_TAG'] ?? '',
-    AMAZON_HOST: process.env['AMAZON_HOST'] ?? 'webservices.amazon.com',
-    AMAZON_MARKETPLACE: process.env['AMAZON_MARKETPLACE'] ?? 'www.amazon.com',
-
     // ── Elasticsearch ─────────────────────────────────────────────────────────
     ELASTICSEARCH_URL: process.env['ELASTICSEARCH_URL'] ?? '',
     ELASTICSEARCH_API_KEY: process.env['ELASTICSEARCH_API_KEY'] ?? '',
 
     // ── Redis / ElasticCache ──────────────────────────────────────────────────
-    REDIS_URL: process.env['REDIS_URL'] ?? 'redis://localhost:6379',
+    REDIS_URL: process.env['REDIS_URL'] ?? '',
 
     // ── SES ───────────────────────────────────────────────────────────────────
     SES_FROM_EMAIL: process.env['SES_FROM_EMAIL'] ?? '',
@@ -89,7 +96,7 @@ export const systemConfig: SystemConfig = {
     SQS_QUEUE_URL: process.env['SQS_QUEUE_URL'] ?? '',
 
     // ── Bedrock ───────────────────────────────────────────────────────────────
-    BEDROCK_MODEL_ID: process.env['BEDROCK_MODEL_ID'] ?? 'amazon.nova-lite-v1:0',
+    BEDROCK_MODEL_ID: process.env['BEDROCK_MODEL_ID'] ?? '',
 };
 
 validateEnv(systemConfig);

@@ -14,3 +14,57 @@ body{
 }
 
 
+
+.gradient-text-01 {
+    background: linear-gradient(135deg, #ff6f61, #f2b97f, #9ce7d0, #7e98f3, #9e67f3);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.gradient-text-02 {
+    background: linear-gradient(135deg,
+    #fedd02 0%,
+    #fea802 16%,
+    #ff1fff 46%,
+    #9838f9 74%,
+    #4e4cf5 91%
+    );
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.gradient-text-03 {
+    background: linear-gradient(135deg,
+    #ff8a00 5%,
+    #ffc837 30%,
+    #ff5f5f 60%,
+    #ce59ff 85%,
+    #7a77ff 100%
+    );
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.gradient-text-04 {
+    background: linear-gradient(135deg,
+    #f4e06d 0%,
+    #f7b42c 25%,
+    #ff619b 50%,
+    #7e57ff 75%,
+    #52a7e0 100%
+    );
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.gradient-text-05 {
+    background: linear-gradient(135deg,
+    #ffcf33 10%,
+    #ff914d 35%,
+    #e64dff 60%,
+    #9370db 85%,
+    #4dd0e1 100%
+    );
+    -webkit-background-clip: text;
+    color: transparent;
+}

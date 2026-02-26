@@ -55,7 +55,7 @@ const OrchestratorAgent: Agent<OrchestratorAgentProps, any> = async (props) => {
 
     const memory = useShortMemory();
     const longMemory = useLongMemory();
-    const llm = useLLModel(LLModelType.AMAZON_NOVA_LITE);
+    const llm = useLLModel(LLModelType.DEEPSEEK_V3);
 
     const user = await UserSession({
         chatBotType: props.chatBotType || "telegram",

@@ -1,1 +1,1 @@
-export * from "./UserSession"
+export * from "./UserSession.js";

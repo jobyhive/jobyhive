@@ -6,14 +6,14 @@
  */
 
 import { useLLModel } from "@repo/framwork";
-import { Agent } from "@repo/types";
+import { Agent, LLModelType } from "@repo/types";
 import { A2AEnvelope, AgentResponse } from "./A2AProtocol.js";
 
 const CommunicationAgent: Agent<A2AEnvelope<any>, AgentResponse<any>> = async (envelope) => {
     if (!envelope) throw new Error("Envelope is required for CommunicationAgent");
 
     const { type, payload } = envelope.input_payload;
-    const llm = useLLModel();
+    const llm = useLLModel(LLModelType.DEEPSEEK_V3);
     const userName = payload.firstName || payload.userName || 'Friend';
 
     let message = "";

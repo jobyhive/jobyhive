@@ -3,8 +3,13 @@
     "version": "0.0.0",
     "private": true,
     "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "build": "tsc"
+    },
     "exports": {
-        ".": "./src/index.ts"
+        ".": "./dist/index.js"
     },
     "dependencies": {
         "@aws-sdk/client-bedrock-runtime": "^3.758.0",

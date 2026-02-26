@@ -109,24 +109,6 @@ services:
     networks:
       - main-network
 
-  # DynamoDB Local
-  dynamodb:
-    image: amazon/dynamodb-local:latest
-    container_name: joby_dynamodb
-    ports:
-      - "8000:8000"
-    volumes:
-      - dynamodb-data:/home/dynamodblocal/data
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data"
-    healthcheck:
-      test: [ "CMD-SHELL", "java -version || exit 1" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-    networks:
-      - main-network
-
 volumes:
   minio-data:
   dynamodb-data:

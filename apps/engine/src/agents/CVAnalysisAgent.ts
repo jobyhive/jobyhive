@@ -131,7 +131,7 @@ Reasoning: [Short explanation]
         cvText || "Analyze the attached CV document.",
         SYSTEM_PROMPT,
         undefined,
-        LLModelType.AMAZON_NOVA_PRO,
+        LLModelType.DEEPSEEK_R1,
         cvFile ? {
             format: format as any || 'pdf',
             name: fileName || 'cv.pdf',

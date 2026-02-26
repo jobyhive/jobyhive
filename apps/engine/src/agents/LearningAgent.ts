@@ -7,6 +7,7 @@
 
 import { Agent } from "@repo/types";
 import { A2AEnvelope, AgentResponse } from "./A2AProtocol.js";
+import CVOptimizationAgent from "./CVOptimizationAgent.js";
 
 const LearningAgent: Agent<A2AEnvelope<any>, AgentResponse<any>> = async (envelope) => {
     if (!envelope) throw new Error("Envelope is required for LearningAgent");
@@ -25,6 +26,7 @@ const LearningAgent: Agent<A2AEnvelope<any>, AgentResponse<any>> = async (envelo
     };
 };
 
+LearningAgent.id = "learning-agent";
 LearningAgent.agentName = "Learning & Improvement Agent";
 LearningAgent.description = "Analyzes feedback and patterns to improve system performance.";
 LearningAgent.skills = [

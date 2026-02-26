@@ -6,7 +6,7 @@
  */
 
 import { useLLModel, useLongMemory } from "@repo/framwork";
-import { Agent } from "@repo/types";
+import { Agent, LLModelType } from "@repo/types";
 import { A2AEnvelope, AgentResponse } from "./A2AProtocol.js";
 import { CandidateProfile } from "./CVAnalysisAgent.js";
 
@@ -32,7 +32,7 @@ const CVOptimizationAgent: Agent<A2AEnvelope<CVOptimizationInput>, AgentResponse
     if (!envelope) throw new Error("Envelope is required for CVOptimizationAgent");
 
     const { profile, targetJob } = envelope.input_payload;
-    const llm = useLLModel();
+    const llm = useLLModel(LLModelType.DEEPSEEK_V3);
     const memory = useLongMemory();
 
     const SYSTEM_PROMPT = `You are an expert ATS optimization specialist and CV writer.

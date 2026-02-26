@@ -10,13 +10,14 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@repo/adk": "workspace:*",
+    "@repo/framwork": "workspace:*",
     "@repo/services": "workspace:*",
     "@repo/system-config": "workspace:*",
     "@repo/security": "workspace:*",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "node-telegram-bot-api": "^0.67.0"
+    "node-telegram-bot-api": "^0.67.0",
+    "serverless-http": "^3.2.0"
   },
   "devDependencies": {
     "@repo/types": "workspace:*",

@@ -1,6 +1,6 @@
 import express from 'express';
-import {config} from '@repo/system-config';
-import router from './router';
+import { config } from '@repo/system-config';
+import router from './router.js';
 
 // App
 const app = express();
@@ -37,4 +37,5 @@ app.listen(port, () => {
     console.log(ASCII_LOGO);
     console.log(FOOTER);
     console.log(`\n• \x1b[32m[Engine]\x1b[0m Backend server running on port ${port}`);
+    console.log(config);
 });
