@@ -80,14 +80,11 @@ export class SimpleQueueService extends Service {
     async connect(): Promise<void> {
         if (this._connected) return;
 
-        const { AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = config;
+        const { AWS_REGION } = config;
 
         this._client = new SQSClient({
             region: AWS_REGION,
-            credentials: {
-                accessKeyId: AWS_ACCESS_KEY_ID,
-                secretAccessKey: AWS_SECRET_ACCESS_KEY,
-            },
+            // Credentials resolved automatically from the Lambda execution role.
         });
 
         this._connected = true;
@@ -111,6 +108,26 @@ export class SimpleQueueService extends Service {
             );
         }
         return this._client;
+    }
+
+    private async sendWithRetry<T>(command: any): Promise<T> {
+        try {
+            return await this.client.send(command) as T;
+        } catch (error: any) {
+            const isAuthError =
+                error.name === 'UnrecognizedClientException' ||
+                error.message?.includes('security token') ||
+                error.message?.includes('ExpiredToken');
+
+            if (isAuthError) {
+                console.warn('[SimpleQueueService] Detected auth error. Re-initializing...', error.message);
+                this._connected = false;
+                this._client = null;
+                await this.connect();
+                return await this.client.send(command) as T;
+            }
+            throw error;
+        }
     }
 
     private resolveQueueUrl(override?: string): string {
@@ -145,7 +162,7 @@ export class SimpleQueueService extends Service {
             )
             : undefined;
 
-        return this.client.send(
+        return this.sendWithRetry<SendMessageCommandOutput>(
             new SendMessageCommand({
                 QueueUrl: queueUrl,
                 MessageBody: options.body,
@@ -166,7 +183,7 @@ export class SimpleQueueService extends Service {
     ): Promise<Message[]> {
         const queueUrl = this.resolveQueueUrl(options.queueUrl);
 
-        const response = await this.client.send(
+        const response = await this.sendWithRetry<any>(
             new ReceiveMessageCommand({
                 QueueUrl: queueUrl,
                 MaxNumberOfMessages: options.maxMessages ?? 1,
@@ -188,7 +205,7 @@ export class SimpleQueueService extends Service {
         receiptHandle: string,
         queueUrl?: string,
     ): Promise<DeleteMessageCommandOutput> {
-        return this.client.send(
+        return this.sendWithRetry<DeleteMessageCommandOutput>(
             new DeleteMessageCommand({
                 QueueUrl: this.resolveQueueUrl(queueUrl),
                 ReceiptHandle: receiptHandle,
@@ -206,7 +223,7 @@ export class SimpleQueueService extends Service {
         timeoutSeconds: number,
         queueUrl?: string,
     ): Promise<void> {
-        await this.client.send(
+        await this.sendWithRetry(
             new ChangeMessageVisibilityCommand({
                 QueueUrl: this.resolveQueueUrl(queueUrl),
                 ReceiptHandle: receiptHandle,
@@ -223,7 +240,7 @@ export class SimpleQueueService extends Service {
         attributes: QueueAttributeName[] = ['All'],
         queueUrl?: string,
     ): Promise<Record<string, string>> {
-        const response = await this.client.send(
+        const response = await this.sendWithRetry<any>(
             new GetQueueAttributesCommand({
                 QueueUrl: this.resolveQueueUrl(queueUrl),
                 AttributeNames: attributes,
@@ -236,7 +253,7 @@ export class SimpleQueueService extends Service {
      * Purge all messages from the queue (use with caution!).
      */
     async purge(queueUrl?: string): Promise<void> {
-        await this.client.send(
+        await this.sendWithRetry(
             new PurgeQueueCommand({ QueueUrl: this.resolveQueueUrl(queueUrl) }),
         );
     }

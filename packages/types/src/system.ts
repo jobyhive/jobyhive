@@ -8,9 +8,7 @@ export interface SystemConfig {
     TELEGRAM_BOT_ACCESS_TOKEN: string;
     TELEGRAM_BOT_API: string;
 
-    // ── AWS credentials (shared across all AWS services) ────────────────────
-    AWS_ACCESS_KEY_ID: string;
-    AWS_SECRET_ACCESS_KEY: string;
+    // ── AWS region (shared across all AWS services) ──────────────────────────
     AWS_REGION: string;
 
     // ── Elasticsearch (Elastic Cloud or self-hosted) ──────────────────────────

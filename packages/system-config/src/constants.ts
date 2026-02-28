@@ -2,28 +2,36 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
 import { SystemConfig } from "@repo/types";
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // ---------------------------------------------------------------------------
-// Resolve the monorepo root and load the correct .env file based on NODE_ENV.
+// Load .env files ONLY when running locally (not inside AWS Lambda).
+//
+// In Lambda, all environment variables are injected by the Lambda runtime
+// (configured in sst.config.ts). The .env files do not exist in the Lambda
+// bundle, so attempting to load them would silently fail and leave every
+// config value as an empty string — causing "Internal Server Error".
 //
 // Load order (later files do NOT override earlier ones):
 //   1. .env.<environment>   – environment-specific values   (highest priority)
 //   2. .env                 – shared baseline / local defaults (fallback)
-//
-// NODE_ENV is read directly from process.env here, before the config object
-// is built, so that the right file is chosen on first import.
 // ---------------------------------------------------------------------------
-const rootDir = path.resolve(__dirname, '..', '..', '..');
 const nodeEnvRaw = process.env['NODE_ENV'] ?? 'development';
-const envFile = nodeEnvRaw === 'production' ? '.env.production' : '.env.development';
 
-// Load the environment-specific file first (highest priority).
-dotenv.config({ path: path.join(rootDir, envFile) });
+// AWS_LAMBDA_FUNCTION_NAME is always set by the Lambda runtime.
+const isLambda = !!process.env.AWS_LAMBDA_FUNCTION_NAME;
 
-// Load the base .env as a fallback; override:false means it will NOT
-// overwrite values that the environment-specific file already set.
-dotenv.config({ path: path.join(rootDir, '.env'), override: false });
+if (!isLambda) {
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
+    const rootDir = path.resolve(__dirname, '..', '..', '..');
+    const envFile = nodeEnvRaw === 'production' ? '.env.production' : '.env.development';
+
+    // Load the environment-specific file first (highest priority).
+    dotenv.config({ path: path.join(rootDir, envFile) });
+
+    // Load the base .env as a fallback; override:false means it will NOT
+    // overwrite values that the environment-specific file already set.
+    dotenv.config({ path: path.join(rootDir, '.env'), override: false });
+}
 
 // ---------------------------------------------------------------------------
 // Runtime validation helpers
@@ -33,16 +41,12 @@ dotenv.config({ path: path.join(rootDir, '.env'), override: false });
  * Required variables that MUST be set before the process starts in production.
  * Missing values here will throw at import time (fail-fast).
  */
-const REQUIRED_IN_PRODUCTION: (keyof SystemConfig)[] = [
-    'AWS_ACCESS_KEY_ID',
-    'AWS_SECRET_ACCESS_KEY',
-];
+const REQUIRED_IN_PRODUCTION: (keyof SystemConfig)[] = [];
 
 function validateEnv(cfg: SystemConfig): void {
     if (cfg.NODE_ENV !== 'production') return;
 
-    // In AWS Lambda, we can rely on IAM roles for AWS credentials, so we don't strict-fail if keys are missing.
-    const isLambda = !!process.env.AWS_LAMBDA_FUNCTION_NAME;
+    // In AWS Lambda, credentials come from the IAM execution role — never from env vars.
     if (isLambda) return;
 
     const missing = REQUIRED_IN_PRODUCTION.filter((key) => {
@@ -81,10 +85,7 @@ export const systemConfig: SystemConfig = {
 
     TELEGRAM_BOT_ACCESS_TOKEN,
     TELEGRAM_BOT_API: `https://api.telegram.org/bot${TELEGRAM_BOT_ACCESS_TOKEN}`,
-    // ── AWS credentials ───────────────────────────────────────────────────────
-    // Prefer the prefixed APP_ version to avoid standard reserved key conflicts in Lambda
-    AWS_ACCESS_KEY_ID: process.env['AWS_ACCESS_KEY_ID'] || process.env['APP_AWS_ACCESS_KEY_ID'] || '',
-    AWS_SECRET_ACCESS_KEY: process.env['AWS_SECRET_ACCESS_KEY'] || process.env['APP_AWS_SECRET_ACCESS_KEY'] || '',
+    // ── AWS region ────────────────────────────────────────────────────────────
     AWS_REGION: process.env['AWS_REGION'] || process.env['APP_AWS_REGION'] || 'us-east-1',
 
     // ── Elasticsearch ─────────────────────────────────────────────────────────

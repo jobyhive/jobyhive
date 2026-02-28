@@ -37,5 +37,4 @@ app.listen(port, () => {
     console.log(ASCII_LOGO);
     console.log(FOOTER);
     console.log(`\n• \x1b[32m[Engine]\x1b[0m Backend server running on port ${port}`);
-    console.log(config);
 });

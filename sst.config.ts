@@ -6,14 +6,25 @@ export default $config({
             name: "joby",
             removal: input?.stage === "production" ? "retain" : "remove",
             home: "aws",
+            providers: {
+                aws: {
+                    region: "us-east-1",
+                },
+            },
         };
     },
     async run() {
+        // (Removed dotenv.config calls to prevent environment leakage)
+
+
         // 1. Backend (Engine)
         // Set up the backend engine as a serverless function with a direct URL access.
         const engine = new sst.aws.Function("Engine", {
             handler: "apps/engine/src/lambda.handler",
             url: true,
+            // AI agent calls (Bedrock, ElasticSearch, Redis) can take 10-60s.
+            // Default Lambda timeout is 3 seconds — way too short.
+            timeout: "5 minutes",
             nodejs: {
                 install: [
                     "express",
@@ -23,6 +34,7 @@ export default $config({
                     "@aws-sdk/client-bedrock-runtime",
                     "@aws-sdk/client-ses",
                     "@aws-sdk/client-sqs",
+                    "@aws-sdk/credential-providers",
                     "@elastic/elasticsearch",
                     "ioredis"
                 ],
@@ -36,15 +48,12 @@ export default $config({
             ],
             environment: {
                 NODE_ENV: "production",
-                // Renaming reserved AWS keys to avoid Lambda deployment errors.
-                // The application will be updated to check these APP_ prefixed versions.
-                APP_AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || "",
-                APP_AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || "",
-                APP_AWS_REGION: process.env.AWS_REGION || "us-east-1",
-                ELASTICSEARCH_URL: process.env.ELASTICSEARCH_URL || "",
-                ELASTICSEARCH_API_KEY: process.env.ELASTICSEARCH_API_KEY || "",
-                BEDROCK_MODEL_ID: process.env.BEDROCK_MODEL_ID || "amazon.nova-lite-v1:0",
-                TELEGRAM_BOT_ACCESS_TOKEN: process.env.TELEGRAM_BOT_ACCESS_TOKEN || "",
+                APP_AWS_REGION: "us-east-1",
+                ELASTICSEARCH_URL: "https://my-elasticsearch-project-f903ba.es.us-central1.gcp.elastic.cloud:443",
+                ELASTICSEARCH_API_KEY: "WElMc2Vad0JSUWxqTTI2VUNmX2U6bjdsSzFUZ1JZRlE4TjdRZE5BNXltZw==",
+                BEDROCK_MODEL_ID: "amazon.nova-lite-v1:0",
+                TELEGRAM_BOT_ACCESS_TOKEN: "8355213023:AAEH52qJBmrJRcBHL9F7vOjXwnuLib4Dyog",
+                REDIS_URL: "rediss://default:AaWWAAIncDE3NTNkOTQ0YzA4ZTc0YjI1YmYyYTRkYmI4ZmJiNTI0OXAxNDIzOTA@key-tarpon-42390.upstash.io:6379",
             },
         });
 
@@ -77,13 +86,10 @@ export default $config({
             environment: {
                 NEXT_PUBLIC_API_URL: "https://ai.jobyhive.com",
                 NODE_ENV: "production",
-                // Consistently using APP_ prefixed versions to avoid Lambda reserved key conflicts.
-                APP_AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || "",
-                APP_AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || "",
-                APP_AWS_REGION: process.env.AWS_REGION || "us-east-1",
-                ELASTICSEARCH_URL: process.env.ELASTICSEARCH_URL || "",
-                ELASTICSEARCH_API_KEY: process.env.ELASTICSEARCH_API_KEY || "",
-                BEDROCK_MODEL_ID: process.env.BEDROCK_MODEL_ID || "amazon.nova-lite-v1:0",
+                APP_AWS_REGION: "us-east-1",
+                ELASTICSEARCH_URL: "https://my-elasticsearch-project-f903ba.es.us-central1.gcp.elastic.cloud:443",
+                ELASTICSEARCH_API_KEY: "WElMc2Vad0JSUWxqTTI2VUNmX2U6bjdsSzFUZ1JZRlE4TjdRZE5BNXltZw==",
+                BEDROCK_MODEL_ID: "amazon.nova-lite-v1:0",
             },
         });
 

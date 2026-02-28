@@ -35,26 +35,35 @@ export class ElasticSearchService extends Service {
     // Lifecycle
     // ─────────────────────────────────────────────────────────────────────────
 
+    private _degraded = false;
+
     async connect(): Promise<void> {
         if (this._connected) return;
+        if (this._degraded) return;
 
         const { ELASTICSEARCH_URL, ELASTICSEARCH_API_KEY } = config;
 
         if (!ELASTICSEARCH_URL || !ELASTICSEARCH_API_KEY) {
-            throw new Error(
-                '[ElasticSearchService] Missing ELASTICSEARCH_URL or ELASTICSEARCH_API_KEY in config.',
-            );
+            console.warn('[ElasticSearchService] Missing ELASTICSEARCH_URL or ELASTICSEARCH_API_KEY – running without ElasticSearch.');
+            this._degraded = true;
+            return;
         }
 
-        this._client = new Client({
-            node: ELASTICSEARCH_URL,
-            auth: { apiKey: ELASTICSEARCH_API_KEY },
-            tls: { rejectUnauthorized: false },
-        });
+        try {
+            this._client = new Client({
+                node: ELASTICSEARCH_URL,
+                auth: { apiKey: ELASTICSEARCH_API_KEY },
+                tls: { rejectUnauthorized: false },
+            });
 
-        // Verify the cluster is reachable
-        await this._client.ping();
-        this._connected = true;
+            // Verify the cluster is reachable
+            await this._client.ping();
+            this._connected = true;
+        } catch (err: any) {
+            console.warn('[ElasticSearchService] Could not connect to ElasticSearch – running without long-term memory:', err.message);
+            this._degraded = true;
+            this._client = null;
+        }
     }
 
     async disconnect(): Promise<void> {
@@ -91,7 +100,8 @@ export class ElasticSearchService extends Service {
         index: string,
         id: string,
         body: T,
-    ): Promise<estypes.IndexResponse> {
+    ): Promise<estypes.IndexResponse | null> {
+        if (this._degraded || !this._client) return null;
         return this.client.index({ index, id, document: body });
     }
 
@@ -105,6 +115,7 @@ export class ElasticSearchService extends Service {
         query: estypes.QueryDslQueryContainer,
         options?: { size?: number; from?: number },
     ): Promise<estypes.SearchHit<T>[]> {
+        if (this._degraded || !this._client) return [];
         const response = await this.client.search<T>({
             index,
             query,
@@ -121,6 +132,7 @@ export class ElasticSearchService extends Service {
         index: string,
         id: string,
     ): Promise<T | null> {
+        if (this._degraded || !this._client) return null;
         try {
             const response = await this.client.get<T>({ index, id });
             return response._source ?? null;
@@ -138,7 +150,8 @@ export class ElasticSearchService extends Service {
     async delete(
         index: string,
         id: string,
-    ): Promise<estypes.DeleteResponse> {
+    ): Promise<estypes.DeleteResponse | null> {
+        if (this._degraded || !this._client) return null;
         return this.client.delete({ index, id });
     }
 
@@ -146,6 +159,7 @@ export class ElasticSearchService extends Service {
      * Check if a document exists.
      */
     async exists(index: string, id: string): Promise<boolean> {
+        if (this._degraded || !this._client) return false;
         return this.client.exists({ index, id });
     }
 

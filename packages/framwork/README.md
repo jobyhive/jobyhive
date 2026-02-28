@@ -1,28 +1,35 @@
 # ADK Agent Development Kit Framework
 
-This ADK is custom-made Agent Development Kit Framework by **Ahmed M. Yassin** to help create reusable services and components. It allows building complex engines like LEGO blocks. For example, you can build an **Agent** with memory (short-term and long-term), a model, and skills.
+The **Agent Development Kit (ADK)** is a custom-made framework designed by **Ahmed M. Yassin** to facilitate the creation of reusable services and components. 
 
-A simple usage could look like this:
+## Philosophy
+
+Build complex AI engines like LEGO blocks. The ADK allows you to modularly construct an **Agent** with:
+- **Memory**: Both short-term and long-term storage.
+- **Model**: Integration with various LLMs (e.g., Amazon Nova).
+- **Skills**: Pluggable capabilities for the agent.
+
+## Quick Start
 
 ```ts
-async function Agent1() {
-    // Initialize short-term memory
+import { useShortMemory, useModel } from "@repo/framwork";
+
+async function MyAgent() {
+    // 1. Initialize Memory
     const shortMemory = useShortMemory();
+    await shortMemory.set("session_id", "xyz-789");
 
-    // Set a value in memory
-    shortMemory.set("key", "value");
-
-    // Retrieve a value from memory
-    const value = await shortMemory.get("key");
-    console.log("Memory value:", value);
-
-    // Use a language model
+    // 2. Load the Language Model
     const llm = useModel("amazon.nova");
 
-    // Example: generate a response
-    const response = await llm.generate("Hello, how are you?");
-    console.log("LLM response:", response);
+    // 3. Generate content
+    const response = await llm.generate("Find me job roles matching my CV.");
+    console.log("Response:", response);
 }
 ```
 
-there are more othor component and element where can help to build project fast and easy.
+## Features
+
+- **Decoupled Architecture**: High-level abstractions for AI components.
+- **Pluggable Providers**: Swap models or memory backends easily.
+- **Developer Experience**: Fluent APIs for rapid agent development.

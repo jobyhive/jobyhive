@@ -27,6 +27,7 @@ export class ElasticCacheService extends Service {
 
     // ── Internal client ──────────────────────────────────────────────────────
     private _client: Redis | null = null;
+    private _degraded = false;
 
     private constructor() {
         super();
@@ -38,21 +39,36 @@ export class ElasticCacheService extends Service {
 
     async connect(): Promise<void> {
         if (this._connected) return;
+        if (this._degraded) return;
 
         const { REDIS_URL } = config;
 
-        this._client = new Redis(REDIS_URL, {
-            maxRetriesPerRequest: 3,
-            lazyConnect: true,
-        });
+        if (!REDIS_URL) {
+            console.warn('[ElasticCacheService] REDIS_URL is not set – running without Redis.');
+            this._degraded = true;
+            return;
+        }
 
-        // Attach error handler before connecting to avoid unhandled rejections
-        this._client.on('error', (err: Error) => {
-            console.error('[ElasticCacheService] Redis error:', err.message);
-        });
+        try {
+            this._client = new Redis(REDIS_URL, {
+                maxRetriesPerRequest: 1,
+                lazyConnect: true,
+                connectTimeout: 3000,
+                tls: REDIS_URL.startsWith('rediss://') ? {} : undefined,
+            });
 
-        await this._client.connect();
-        this._connected = true;
+            // Attach error handler before connecting to avoid unhandled rejections
+            this._client.on('error', (err: Error) => {
+                console.error('[ElasticCacheService] Redis error:', err.message);
+            });
+
+            await this._client.connect();
+            this._connected = true;
+        } catch (err: any) {
+            console.warn('[ElasticCacheService] Could not connect to Redis – running without cache:', err.message);
+            this._degraded = true;
+            this._client = null;
+        }
     }
 
     async disconnect(): Promise<void> {
@@ -81,11 +97,13 @@ export class ElasticCacheService extends Service {
 
     /** Retrieve a cached value (returns `null` if key does not exist). */
     async get(key: string): Promise<string | null> {
+        if (this._degraded || !this._client) return null;
         return this.client.get(key);
     }
 
     /** Store a string value with an optional TTL (seconds). */
     async set(key: string, value: string, ttlSeconds?: number): Promise<void> {
+        if (this._degraded || !this._client) return;
         if (ttlSeconds !== undefined) {
             await this.client.set(key, value, 'EX', ttlSeconds);
         } else {
@@ -95,11 +113,13 @@ export class ElasticCacheService extends Service {
 
     /** Store a value with a mandatory TTL (seconds). */
     async setEx(key: string, ttlSeconds: number, value: string): Promise<void> {
+        if (this._degraded || !this._client) return;
         await this.client.setex(key, ttlSeconds, value);
     }
 
     /** Delete one or more keys. */
     async del(...keys: string[]): Promise<number> {
+        if (this._degraded || !this._client) return 0;
         return this.client.del(...keys);
     }
 

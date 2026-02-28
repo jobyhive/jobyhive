@@ -1,0 +1,12 @@
+{
+    "ELASTICSEARCH_API_KEY": "WElMc2Vad0JSUWxqTTI2VUNmX2U6bjdsSzFUZ1JZRlE4TjdRZE5BNXltZw==",
+    "SST_RESOURCE_App": "{\"name\":\"joby\",\"stage\":\"prod\"}",
+    "ELASTICSEARCH_URL": "https://my-elasticsearch-project-f903ba.es.us-central1.gcp.elastic.cloud:443",
+    "SST_KEY": "0rcNYS5mc4e8ko0JqG9uszcchP5qXCvawv+bstUxDMs=",
+    "NODE_ENV": "production",
+    "SST_KEY_FILE": "resource.enc",
+    "APP_AWS_REGION": "us-east-1",
+    "TELEGRAM_BOT_ACCESS_TOKEN": "8355213023:AAEH52qJBmrJRcBHL9F7vOjXwnuLib4Dyog",
+    "BEDROCK_MODEL_ID": "amazon.nova-lite-v1:0",
+    "REDIS_URL": "rediss://default:AaWWAAIncDE3NTNkOTQ0YzA4ZTc0YjI1YmYyYTRkYmI4ZmJiNTI0OXAxNDIzOTA@key-tarpon-42390.upstash.io:6379"
+}

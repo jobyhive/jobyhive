@@ -23,7 +23,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "deploy:prod": "sst deploy --stage prod"
+    "deploy:prod": "sst deploy --stage prod "
   },
   "devDependencies": {
     "prettier": "^3.7.4",

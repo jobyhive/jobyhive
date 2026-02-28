@@ -183,7 +183,7 @@ export const Hero = () => {
                             <iframe
                                 width="100%"
                                 height="100%"
-                                src="https://www.youtube.com/embed/cM0tMFaNRAI?autoplay=1"
+                                src="https://www.youtube.com/embed/4bbOtU1lxN0?autoplay=1"
                                 title="Joby Demo Video"
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

@@ -68,14 +68,11 @@ export class SimpleEmailService extends Service {
     async connect(): Promise<void> {
         if (this._connected) return;
 
-        const { AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = config;
+        const { AWS_REGION } = config;
 
         this._client = new SESClient({
             region: AWS_REGION,
-            credentials: {
-                accessKeyId: AWS_ACCESS_KEY_ID,
-                secretAccessKey: AWS_SECRET_ACCESS_KEY,
-            },
+            // Credentials resolved automatically from the Lambda execution role.
         });
 
         this._connected = true;
@@ -99,6 +96,26 @@ export class SimpleEmailService extends Service {
             );
         }
         return this._client;
+    }
+
+    private async sendWithRetry<T>(command: any): Promise<T> {
+        try {
+            return await this.client.send(command) as T;
+        } catch (error: any) {
+            const isAuthError =
+                error.name === 'UnrecognizedClientException' ||
+                error.message?.includes('security token') ||
+                error.message?.includes('ExpiredToken');
+
+            if (isAuthError) {
+                console.warn('[SimpleEmailService] Detected auth error. Re-initializing...', error.message);
+                this._connected = false;
+                this._client = null;
+                await this.connect();
+                return await this.client.send(command) as T;
+            }
+            throw error;
+        }
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -155,7 +172,7 @@ export class SimpleEmailService extends Service {
             ReplyToAddresses: options.replyTo,
         };
 
-        return this.client.send(new SendEmailCommand(input));
+        return this.sendWithRetry(new SendEmailCommand(input));
     }
 
     /**
@@ -170,7 +187,7 @@ export class SimpleEmailService extends Service {
                 ? new TextEncoder().encode(rawMessage)
                 : rawMessage;
 
-        await this.client.send(new SendRawEmailCommand({ RawMessage: { Data: data } }));
+        await this.sendWithRetry(new SendRawEmailCommand({ RawMessage: { Data: data } }));
     }
 }
 
